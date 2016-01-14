@@ -1,0 +1,12 @@
+{
+  "name": "url-shortener",
+  "version": "0.0.0",
+  "description": "A url shortener",
+  "main": "server.js",
+  "repository": "",
+  "author": "Max Boyko <maxboykomax@gmail.com>",
+  "dependencies": {
+    "express": "~3.2.4",
+    "validator": "^4.5.0"
+  }
+}
