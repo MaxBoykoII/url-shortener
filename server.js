@@ -29,7 +29,14 @@ var redirect = require(path + '/middleware/redirect.js');
 
 app.set('json spaces', 0);
 
+app.get('/', function(req, res) {
 
+
+  res.sendfile(path + '/client/index.html');
+
+});
+
+redirect(app, mongoose);
 
 app.get('/new/*', function(req, res, next) {
 
@@ -52,13 +59,6 @@ app.get('/new/*', function(req, res, next) {
 
 newUrl(app, mongoose);
 
-app.get('/', function(req, res) {
 
-
-  res.sendfile(path + '/client/index.html');
-
-});
-
-redirect(app, mongoose);
 
 app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0");
