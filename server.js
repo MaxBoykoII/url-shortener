@@ -1,18 +1,17 @@
-var express = require('express');
-var validator = require('validator');
-var app = express();
-var urlOptions = {
-  protocols: ['http', 'https'],
-  require_protocol: true,
-  allow_underscores: true
-};
-var path = process.cwd();
+var express = require('express'),
+  validator = require('validator'),
+  app = express(),
+  urlOptions = {
+    protocols: ['http', 'https'],
+    require_protocol: true,
+    allow_underscores: true
+  },
+  path = process.cwd();
 
 //mongoose connection
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://administrator:admin@ds045475.mongolab.com:45475/urldb');
-var db = mongoose.connection;
 var Schema = mongoose.Schema;
 mongoose.model('url',
   new Schema({
@@ -29,13 +28,6 @@ var redirect = require(path + '/middleware/redirect.js');
 //app routes
 
 app.set('json spaces', 0);
-
-app.get('/', function(req, res) {
-
-
-  res.sendfile(path + '/client/index.html');
-
-});
 
 
 
@@ -58,14 +50,15 @@ app.get('/new/*', function(req, res, next) {
 
 });
 
-newUrl(app, {
-  mongoose: mongoose,
-  db: db
+newUrl(app, mongoose);
+
+app.get('/', function(req, res) {
+
+
+  res.sendfile(path + '/client/index.html');
+
 });
 
-redirect(app, {
-  mongoose: mongoose,
-  db: db
-});
+redirect(app, mongoose);
 
 app.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0");

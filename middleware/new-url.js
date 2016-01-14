@@ -1,16 +1,16 @@
 var shortid = require('shortid');
 
-function newUrl(app, options) {
+function newUrl(app, mongoose) {
 
     app.use(function(req, res, next) {
         var submittedUrl = req.url.substring(5, this.length),
-            shortened = options.mongoose.model('url');
+            shortened = mongoose.model('url');
 
         shortened.find({
             url: submittedUrl
         }, function(err, data) {
             if (err) {
-                res.send('failed');
+                console.log(err);
             }
             else if (data.length === 0) {
                 var short = shortid.generate(),
@@ -25,7 +25,7 @@ function newUrl(app, options) {
                     else {
                         var newDocumentObj = {
                             original_url: newDocument.url,
-                            short_url: newDocument.short_url
+                            short_url: "https://url-shortener-2.herokuapp.com/" + newDocument.short_url
                         };
                         res.json(newDocumentObj);
                     }
@@ -40,7 +40,7 @@ function newUrl(app, options) {
                 var entry = data[0],
                     obj = {
                         original_url: entry.url,
-                        short_url: entry.short_url
+                        short_url: "https://url-shortener-2.herokuapp.com/"+ entry.short_url
                     };
 
                 res.json(obj);
